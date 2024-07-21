@@ -1,91 +1,49 @@
 import React, { useEffect } from 'react';
 import Phaser from 'phaser';
+
 import './App.css';
 
-const baseStyle = `
-    font-family: 'Trebuchet MS', serif;
-    font-size: 20px;
-    border: 2px solid #4e342e;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
-`;
+require('dotenv').config(); // environment variables
+const Groq = require('groq-sdk');
 
-const chatLogStyle = `
-    ${baseStyle}
-    width: 240px;
-    height: 570px;
-    background-color: rgba(0, 0, 0, 0.0);
-    padding: 10px;
-    direction: ltr;
-    box-shadow: none;
-    border: none;
-    overflow-y: auto;
-`;
-
-const inputStyle = `
-    ${baseStyle}
-    width: 270px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: none;
-`;
-
-const sendButtonStyle = `
-    ${baseStyle}
-    width: 270px;
-    height: 44px;
-    color: #e0d7c5;
-    background: linear-gradient(to bottom, #957d5f, #6c543e);
-    box-shadow: none;
-`;
-
-const closeButtonStyle = `
-    ${baseStyle}
-    width: 30px;
-    height: 30px;
-    border-radius: 30px; // makes the button circular
-    color: #fff; // white text color
-    background-color: #ff6347; // tomato red background
-    font-size: 30px; // larger font size for the 'X'
-    text-align: center; // centers the 'X' in the button
-    line-height: 30px; // vertically centers the 'X' in the button
-    cursor: pointer; // changes cursor to pointer on hover
-`;
-
-// const Groq = require('groq-sdk');
-
-// const groq = new Groq();
-// groq.apiKey = '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';
+const groq = new Groq();
+groq.apiKey = process.env.GROQ_API_KEY;
 
 // The game code here
 class ChatManager {
   constructor(characterDescription) {
       this.characterDescription = characterDescription;
-      this.messages = [];
+      this.messages = [
+        {
+          "role": "system",
+          "content": "You are a strange old man that speaks in riddles about programming and wizardry. You are concise and bizarre."
+        }
+      ];
   }
 
-  addMessage(role, message) {
-      this.messages.push({ role, message });
+  addMessage(role, content) {
+      this.messages.push({ role, content });
   }
 
   async getCharacterResponse() {
       try {
-          // const chatCompletion = await groq.chat.completions.create({
-          //     "messages": this.messages,
-          //     "model": "llama3-8b-8192",
-          //     "temperature": 1,
-          //     "max_tokens": 1024,
-          //     "top_p": 1,
-          //     "stream": false,
-          //     "stop": null
-          // });
+          const chatCompletion = await groq.chat.completions.create({
+              "messages": this.messages,
+              "model": "llama3-8b-8192",
+              "temperature": 1,
+              "max_tokens": 1024,
+              "top_p": 1,
+              "stream": false,
+              "stop": null
+          });
 
-          const chatCompletion = null;
+          // Log the chatCompletion object to inspect its structure
+        console.log('chatCompletion:', chatCompletion);
 
-          let response = '';
-          for await (const chunk of chatCompletion) {
-              response += chunk.choices[0]?.delta?.content || '';
-          }
+          // Initialize response variable
+          const response = chatCompletion.choices.map(choice => choice.message?.content || '').join('');
           return response;
+
       } catch (error) {
           console.error('Error fetching character response:', error);
           // Provide a fallback response for testing
@@ -418,23 +376,24 @@ class ChatScene extends Phaser.Scene {
     }
 
     async sendChatMessage(npc, chatManager, chatInputId, chatLogId) {
-        const chatInputNode = document.getElementById(chatInputId);
-        const chatLogNode = document.getElementById(chatLogId);
-
-        if (chatInputNode && chatLogNode) {
-            const inputValue = chatInputNode.value;
-            if (inputValue) {
-                chatManager.addMessage('user', inputValue);
-                this.updateChatLog(document.getElementById(npc.chatLogId), 'Player', inputValue);
-
-                const response = await chatManager.getCharacterResponse();
-                chatManager.addMessage('assistant', response);
-                this.updateChatLog(document.getElementById(npc.chatLogId), 'Character', response);
-
-                document.getElementById('chatInput').value = '';
-            }
-        }
-    }
+      const chatInputNode = document.getElementById(chatInputId);
+      const chatLogNode = document.getElementById(chatLogId);
+  
+      if (chatInputNode && chatLogNode) {
+          const inputValue = chatInputNode.value;
+          if (inputValue) {
+              chatManager.addMessage('user', inputValue);
+              this.updateChatLog(chatLogNode, 'Player', inputValue);
+  
+              const response = await chatManager.getCharacterResponse();
+              chatManager.addMessage('assistant', response);
+              this.updateChatLog(chatLogNode, 'Character', response);
+  
+              chatInputNode.value = '';
+          }
+      }
+  }
+  
 }
 
 const config = {
