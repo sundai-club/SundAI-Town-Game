@@ -4,7 +4,6 @@ import ChatScene from './components/ChatScene.js';
 
 import './App.css';
 
-require('dotenv').config(); // environment variables
 const Groq = require('groq-sdk');
 
 const groq = new Groq();
