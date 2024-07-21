@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Phaser from 'phaser';
 import ChatScene from './components/ChatScene.js';
-
 import './App.css';
 
 const Groq = require('groq-sdk');
@@ -187,4 +186,4 @@ function App() {
   );
 }
 
-export default App;
+export { App as default, groq };
