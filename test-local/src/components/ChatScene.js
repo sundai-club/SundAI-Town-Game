@@ -7,7 +7,7 @@ import { addColliders } from './colliders';
 class ChatScene extends Phaser.Scene {
     preload() {
         this.load.image('background', '/assets/hoenn_remake__rustboro_city_by_yuysusl_d4y385y-fullview.jpg');
-        this.load.image('foreground', `https://play.rosebud.ai/assets/ai-town-foreground.png.png?R413`)
+        //this.load.image('foreground', `/assets/`)
         this.load.spritesheet('player', `https://play.rosebud.ai/assets/cat_Walk.png.png?Yuts`, {
             frameWidth: 48,
             frameHeight: 48
