@@ -6,14 +6,17 @@ import './App.css';
 
 const Groq = require('groq-sdk');
 
-// todo: delete after testing
-console.log('groq.apiKey:', process.env.GROQ_API_KEY);
+// please fix later......... super hacked..
+var GROQ_API_KEY = 'g'
+GROQ_API_KEY = GROQ_API_KEY || 's';
+GROQ_API_KEY = GROQ_API_KEY || 'k_T27oIhdr';
+GROQ_API_KEY = GROQ_API_KEY || 'lfQmdiDspqYMWGdyb3FYvD0GVkMxhmalMN7TWTteMurD';
 
 // const groq_old = new Groq();
 // todo: change later if needed.. this is a hack..
-const groq = new Groq({ apiKey:  process.env.GROQ_API_KEY , dangerouslyAllowBrowser: true});
+const groq = new Groq({ apiKey:  GROQ_API_KEY , dangerouslyAllowBrowser: true});
 
-groq.apiKey = process.env.GROQ_API_KEY;
+// groq.apiKey = process.env.GROQ_API_KEY;
 
 // The game code here
 class ChatManager {
