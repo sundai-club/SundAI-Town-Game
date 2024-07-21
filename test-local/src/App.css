@@ -37,3 +37,52 @@
   }
 }
 
+/* Base styles for common styling properties */
+.base-style {
+  font-family: 'Trebuchet MS', serif;
+  font-size: 20px;
+  border: 2px solid #4e342e;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Chat log specific styles */
+.chat-log {
+  width: 240px;
+  height: 570px;
+  background-color: rgba(0, 0, 0, 0.0);
+  padding: 10px;
+  direction: ltr;
+  box-shadow: none;
+  border: none;
+  overflow-y: auto;
+}
+
+/* Input field specific styles */
+.input-style {
+  width: 270px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.4);
+  box-shadow: none;
+}
+
+/* Send button specific styles */
+.send-button {
+  width: 270px;
+  height: 44px;
+  color: #e0d7c5;
+  background: linear-gradient(to bottom, #957d5f, #6c543e);
+  box-shadow: none;
+}
+
+/* Close button specific styles */
+.close-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px; /* makes the button circular */
+  color: #fff; /* white text color */
+  background-color: #ff6347; /* tomato red background */
+  font-size: 30px; /* larger font size for the 'X' */
+  text-align: center; /* centers the 'X' in the button */
+  line-height: 30px; /* vertically centers the 'X' in the button */
+  cursor: pointer; /* changes cursor to pointer on hover */
+}
