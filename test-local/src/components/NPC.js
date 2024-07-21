@@ -1,7 +1,22 @@
+/**
+ * NPC class extends Phaser's Sprite class, representing non-player characters in the game.
+ * It manages the character's animations, interactions, and chat functionalities.
+ */
 import Phaser from 'phaser';
 import ChatManager from './ChatManager';
 
 class NPC extends Phaser.Physics.Arcade.Sprite {
+  /**
+   * Creates an instance of an NPC.
+   * @param {Phaser.Scene} scene - The scene this NPC belongs to.
+   * @param {number} x - The x position of the NPC in the scene.
+   * @param {number} y - The y position of the NPC in the scene.
+   * @param {string} key - The texture key to use for this NPC.
+   * @param {string} characterDescription - A description of the NPC's character.
+   * @param {string} animKey - The key for the animation this NPC will use.
+   * @param {number} startFrame - The starting frame number for the animation.
+   * @param {number} endFrame - The ending frame number for the animation.
+   */
   constructor(scene, x, y, key, characterDescription, animKey, startFrame, endFrame) {
     super(scene, x, y, key);
 
@@ -25,6 +40,9 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     this.createAnimation(animKey, startFrame, endFrame);
   }
 
+  /**
+   * Sets the cursor style when hovering over the NPC based on the proximity of the player.
+   */
   setCursorStyle() {
     this.on('pointerover', () => {
       if (this.playerInRange(this.scene.player)) {
@@ -37,6 +55,9 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
+  /**
+   * Updates the NPC's movement and behavior each frame, considering the direction and chatting status.
+   */
   update() {
     if (this.isChatting) return;
 
@@ -54,6 +75,12 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     this.directionChangeTimer -= 1;
   }
 
+  /**
+   * Creates and initializes an animation for this NPC.
+   * @param {string} animKey - The key for the animation.
+   * @param {number} startFrame - The starting frame number for the animation.
+   * @param {number} endFrame - The ending frame number for the animation.
+   */
   createAnimation(animKey, startFrame, endFrame) {
     this.scene.anims.create({
       key: animKey,
@@ -68,15 +95,26 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     this.anims.play(animKey, true);
   }
 
+  /**
+   * Opens the chat interface for this NPC, making it the active chat participant.
+   */
   openChat() {
     this.isChatting = true;
     this.scene.openChat(this);
   }
 
+  /**
+   * Closes the chat interface, allowing the NPC to resume other behaviors.
+   */
   closeChat() {
     this.isChatting = false;
   }
 
+  /**
+   * Checks if the player is within a certain range of this NPC.
+   * @param {Phaser.GameObjects.GameObject} player - The player's game object.
+   * @returns {boolean} True if the player is within interaction range, false otherwise.
+   */
   playerInRange(player) {
     const distance = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y);
     return distance < 230;

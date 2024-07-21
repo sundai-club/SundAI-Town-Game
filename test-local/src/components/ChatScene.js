@@ -1,3 +1,6 @@
+/**
+ * Manages the primary gameplay scene in the game, including loading assets, creating and animating sprites, and handling user interactions.
+ */
 import Phaser from 'phaser';
 import NPC from './NPC';
 import Player from './Player';
@@ -5,9 +8,11 @@ import { createAnimations } from './animations';
 import { addColliders } from './colliders';
 
 class ChatScene extends Phaser.Scene {
+    /**
+     * Preloads necessary game assets like images and audio.
+     */
     preload() {
         this.load.image('background', '/assets/hoenn_remake__rustboro_city_by_yuysusl_d4y385y-fullview.jpg');
-        //this.load.image('foreground', `/assets/`)
         this.load.spritesheet('player', `https://play.rosebud.ai/assets/cat_Walk.png.png?Yuts`, {
             frameWidth: 48,
             frameHeight: 48
@@ -30,9 +35,11 @@ class ChatScene extends Phaser.Scene {
         });
         this.load.image('scroll', `https://play.rosebud.ai/assets/scrollpage03.png.png?g4DO`);
         this.load.audio('music', `https://play.rosebud.ai/assets/Game Village Shop RPG Theme (Endless Loop Version) - Elevate Audio.mp3.mp3?EUXn`);
-
     }
 
+    /**
+     * Creates the main gameplay elements, including the background, player character, NPCs, and interactions.
+     */
     create() {
         this.physics.world.setBounds(0, 0, 1080, 890);
 
@@ -118,6 +125,9 @@ class ChatScene extends Phaser.Scene {
         this.boy.setCursorStyle();
     }
 
+    /**
+     * Update method called on each frame of the game loop. Handles the movement of the player and checks for interactions.
+     */
     update() {
         if (this.isChatOpen) {
             if (this.cursors.up.isDown || this.cursors.down.isDown || this.cursors.left.isDown || this.cursors.right.isDown) {
@@ -160,11 +170,22 @@ class ChatScene extends Phaser.Scene {
         }
     }
 
+    /**
+     * Adds a collider object to the scene at specified coordinates.
+     * @param {number} x - The x-coordinate of the top-left corner of the collider.
+     * @param {number} y - The y-coordinate of the top-left corner of the collider.
+     * @param {number} width - The width of the collider.
+     * @param {number} height - The height of the collider.
+     */
     addCollider(x, y, width, height) {
         const collider = this.colliders.create(x, y, null).setOrigin(0, 0).refreshBody().setVisible(false);
         collider.body.setSize(width, height);
     }
 
+    /**
+     * Opens the chat interface when the player interacts with an NPC.
+     * @param {NPC} npc - The NPC with which the player is interacting.
+     */
     openChat(npc) {
         console.log("LET'S OPEN CHAT");
         if (this.isChatOpen) return;
@@ -226,6 +247,9 @@ class ChatScene extends Phaser.Scene {
         }
     }
 
+    /**
+     * Closes the chat interface, clearing any active chat dialogs.
+     */
     closeChat() {
         if (!this.isChatOpen) return;
         this.isChatOpen = false;
@@ -239,12 +263,25 @@ class ChatScene extends Phaser.Scene {
         }
     }
 
+    /**
+     * Updates the chat log with new messages.
+     * @param {HTMLElement} chatLogNode - The DOM node representing the chat log.
+     * @param {string} role - The role of the message sender ('Player' or 'Character').
+     * @param {string} message - The content of the message.
+     */
     updateChatLog(chatLogNode, role, message) {
         const color = role === 'Player' ? '#3d1e01' : '#8a0094';
         chatLogNode.innerHTML += `<p style="color: ${color};">${role}: ${message}</p>`;
         chatLogNode.scrollTop = chatLogNode.scrollHeight;
     }
 
+    /**
+     * Sends a chat message from the player to an NPC and updates the chat log with the response.
+     * @param {NPC} npc - The NPC involved in the chat.
+     * @param {ChatManager} chatManager - The chat manager handling the NPC's responses.
+     * @param {string} chatInputId - The ID of the chat input element.
+     * @param {string} chatLogId - The ID of the chat log element.
+     */
     async sendChatMessage(npc, chatManager, chatInputId, chatLogId) {
       const chatInputNode = document.getElementById(chatInputId);
       const chatLogNode = document.getElementById(chatLogId);

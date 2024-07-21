@@ -1,3 +1,7 @@
+/**
+ * Main entry point for the Sundai Club game application. It sets up and initiates the Phaser game engine.
+ * This file initializes the game with configurations and handles the lifecycle of the game instance.
+ */
 import React, { useEffect } from 'react';
 import Phaser from 'phaser';
 import ChatScene from './components/ChatScene.js';
@@ -5,34 +9,45 @@ import './App.css';
 
 const Groq = require('groq-sdk');
 
-// please fix later......... super hacked..
+// API key handling (please replace with secure environment variables in production)
 var GROQ_API_KEY = 'g'
 GROQ_API_KEY = GROQ_API_KEY || 's';
 GROQ_API_KEY = GROQ_API_KEY || 'k_T27oIhdr';
 GROQ_API_KEY = GROQ_API_KEY || 'lfQmdiDspqYMWGdyb3FYvD0GVkMxhmalMN7TWTteMurD';
 
-// const groq_old = new Groq();
-// todo: change later if needed.. this is a hack..
+// Initialize the Groq API with the provided API key
 const groq = new Groq({ apiKey:  GROQ_API_KEY , dangerouslyAllowBrowser: true});
 
-// groq.apiKey = process.env.GROQ_API_KEY;
-
-// The game code here
+/**
+ * Represents the primary chat functionality in the game, allowing interactions between characters.
+ * Manages messages and responds using the Groq SDK.
+ */
 class ChatManager {
+  /**
+   * Creates an instance of ChatManager.
+   * @param {string} characterDescription - Description of the character for which the manager is instantiated.
+   */
   constructor(characterDescription) {
       this.characterDescription = characterDescription;
-      this.messages = [
-        {
+      this.messages = [{
           "role": "system",
           "content": "You are a strange old man that speaks in riddles about programming and wizardry. You are concise and bizarre."
-        }
-      ];
+      }];
   }
 
+  /**
+   * Adds a message to the chat.
+   * @param {string} role - The role of the sender (e.g., 'system', 'user', 'character').
+   * @param {string} content - The content of the message to be added.
+   */
   addMessage(role, content) {
       this.messages.push({ role, content });
   }
 
+  /**
+   * Fetches a character response from the Groq API based on the current chat history.
+   * @returns {Promise<string>} The character's response as a string.
+   */
   async getCharacterResponse() {
       try {
           const chatCompletion = await groq.chat.completions.create({
@@ -60,7 +75,22 @@ class ChatManager {
   }
 }
 
+/**
+ * NPC class extends Phaser's Sprite class, representing non-player characters in the game.
+ * It manages the character's animations, interactions, and chat functionalities.
+ */
 class NPC extends Phaser.Physics.Arcade.Sprite {
+    /**
+     * Creates an instance of an NPC.
+     * @param {Phaser.Scene} scene - The scene this NPC belongs to.
+     * @param {number} x - The x position of the NPC in the scene.
+     * @param {number} y - The y position of the NPC in the scene.
+     * @param {string} key - The texture key to use for this NPC.
+     * @param {string} characterDescription - A description of the NPC's character.
+     * @param {string} animKey - The key for the animation this NPC will use.
+     * @param {number} startFrame - The starting frame number for the animation.
+     * @param {number} endFrame - The ending frame number for the animation.
+     */
     constructor(scene, x, y, key, characterDescription, animKey, startFrame, endFrame) {
         super(scene, x, y, key);
 
@@ -84,6 +114,9 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
         this.createAnimation(animKey, startFrame, endFrame);
     }
 
+    /**
+     * Sets the cursor style when hovering over the NPC based on the proximity of the player.
+     */
     setCursorStyle() {
         this.on('pointerover', () => {
             if (this.playerInRange(this.scene.player)) {
@@ -96,6 +129,9 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
         });
     }
 
+    /**
+     * Updates the NPC's movement and behavior each frame, considering the direction and chatting status.
+     */
     update() {
         if (this.isChatting) return;
 
@@ -113,6 +149,12 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
         this.directionChangeTimer -= 1;
     }
 
+    /**
+     * Creates and initializes an animation for this NPC.
+     * @param {string} animKey - The key for the animation.
+     * @param {number} startFrame - The starting frame number for the animation.
+     * @param {number} endFrame - The ending frame number for the animation.
+     */
     createAnimation(animKey, startFrame, endFrame) {
         this.scene.anims.create({
             key: animKey,
@@ -127,21 +169,35 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
         this.anims.play(animKey, true);
     }
 
+    /**
+     * Opens the chat interface for this NPC, making it the active chat participant.
+     */
     openChat() {
         this.isChatting = true;
         this.scene.openChat(this);
     }
 
+    /**
+     * Closes the chat interface, allowing the NPC to resume other behaviors.
+     */
     closeChat() {
         this.isChatting = false;
     }
 
+    /**
+     * Checks if the player is within a certain range of this NPC.
+     * @param {Phaser.GameObjects.GameObject} player - The player's game object.
+     * @returns {boolean} True if the player is within interaction range, false otherwise.
+     */
     playerInRange(player) {
         const distance = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y);
         return distance < 230;
     }
 }
 
+/**
+ * Game configuration object for Phaser. Specifies the type of renderer, game dimensions, physics settings, and more.
+ */
 const config = {
   type: Phaser.AUTO,
   parent: 'phaser-container',
@@ -168,6 +224,10 @@ const config = {
   }
 };
 
+/**
+ * The main React component for the application. It initializes the Phaser game and handles its lifecycle.
+ * @returns {JSX.Element} The rendered component.
+ */
 function App() {
   useEffect(() => {
     const game = new Phaser.Game(config);
