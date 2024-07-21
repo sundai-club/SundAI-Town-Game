@@ -3,7 +3,6 @@ import Phaser from 'phaser';
 
 import './App.css';
 
-require('dotenv').config(); // environment variables
 const Groq = require('groq-sdk');
 
 const groq = new Groq();
