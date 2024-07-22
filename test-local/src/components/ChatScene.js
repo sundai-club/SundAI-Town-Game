@@ -56,6 +56,7 @@ class Building {
 }
 
 class ChatScene extends Phaser.Scene {
+<<<<<<< HEAD
 
     constructor() {
         super('ChatScene')
@@ -74,6 +75,11 @@ class ChatScene extends Phaser.Scene {
     }
 
 
+=======
+    constructor() {
+        super('ChatScene')
+    }
+>>>>>>> a4c830f (added api key challenge; constructor for chat scene;)
     /**
      * Preloads necessary game assets like images and audio.
      */
