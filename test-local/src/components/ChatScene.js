@@ -192,7 +192,7 @@ class ChatScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         // Create NPCs and set cursor style for hover
-        this.fishingguy = new NPC(this, 656, 500, 'fishingguy', 'HUNTING', 'fishingguy', 0, 3).setScale(-2.5, 2.5);
+        this.fishingguy = new NPC(this, 656, 500, 'fishingguy', 'HUNTING', 'fishingguy', 0, 3, "HERE ADD AI NEWS HOUND").setScale(-2.5, 2.5);
         this.fishingguy.setInteractive();
         this.fishingguy.setCursorStyle();
 
@@ -200,7 +200,7 @@ class ChatScene extends Phaser.Scene {
         this.girl.setInteractive();
         this.girl.setCursorStyle();
 
-        this.boy = new NPC(this, 200, 170, 'boy', 'I DIGEST BOOKS', 'boy', 0, 7).setScale(3);
+        this.boy = new NPC(this, 200, 170, 'boy', 'I DIGEST BOOKS', 'boy', 0, 7, "HERE ADD AI BOOK DIGEST").setScale(3);
         this.boy.setInteractive();
         this.boy.setCursorStyle();
     }

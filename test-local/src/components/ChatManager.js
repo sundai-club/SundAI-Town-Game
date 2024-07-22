@@ -7,8 +7,9 @@ class ChatManager {
     /**
      * Constructs a ChatManager with a specified character description.
      * @param {string} characterDescription - Description of the character this chat manager handles.
+     * @param {string} LLM_CONTEXT - Description of the character this chat manager handles.
      */
-    constructor(characterDescription) {
+    constructor(characterDescription, LLM_CONTEXT) {
         this.characterDescription = characterDescription;
         this.messages = [
           {
