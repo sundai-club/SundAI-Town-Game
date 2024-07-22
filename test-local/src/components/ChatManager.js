@@ -14,7 +14,7 @@ class ChatManager {
         this.messages = [
           {
             "role": "system",
-            "content": "You are a strange old man that speaks in riddles about programming and wizardry. You are concise and bizarre."
+            "content": LLM_CONTEXT
           }
         ];
     }
