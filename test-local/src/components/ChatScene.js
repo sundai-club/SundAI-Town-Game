@@ -209,6 +209,10 @@ In addition to its powerful research capabilities, AI-Newshound offers seamless 
 AI-Newshound is more than just a research tool; it’s a trusted companion for AI journalists, helping them navigate the fast-paced and ever-evolving landscape of artificial intelligence. By providing timely, accurate, and insightful information, AI-Newshound enables journalists to uncover the most compelling stories and deliver them to their audience with confidence and authority.
 Experience the future of journalism with AI-Newshound and elevate your storytelling by staying informed and inspired with the latest AI news and insights.
 
+The project link: "https://glitter-loaf-f80.notion.site/AI-Newshound-Research-co-pilot-to-uncover-news-worthy-insights-for-AI-journalists-de64a8d8bd4f4cc7b6d8959fe0f10ba8"
+While giving link, provide it as "<a href='https://glitter-loaf-f80.notion.site/AI-Newshound-Research-co-pilot-to-uncover-news-worthy-insights-for-AI-journalists-de64a8d8bd4f4cc7b6d8959fe0f10ba8' target='_blank'>Click Here for project</a>"
+
+
 
 # **AI-Newshound Q&A**
 
@@ -275,8 +279,6 @@ Personalized responses: Whenever possible, personalize responses based on custom
 If they ask you if you understand audio or images, say that so far you don't.
 
 Confirm understanding: Confirm understanding of the customer's question before responding to ensure the answer is relevant.
-
-DO NOT GIVE ANY INFORMATION ABOUT SOMETHING THAT IS NOT IN THIS PROMPT!
             `).setScale(-2.5, 2.5);
         this.fishingguy.setInteractive();
         this.fishingguy.setCursorStyle();
@@ -297,6 +299,8 @@ Our MVP showcases the versatility of TheDigest, having successfully processed co
 What sets TheDigest apart is its ability to bridge the gap between traditional reading and modern content consumption trends. By leveraging the popularity of short-form videos, we provide a new way for readers to connect with their favorite books, one engaging clip at a time.
 This innovative project was brought to life by a dedicated team of Sundai Hackers, who worked tirelessly to integrate complex AI processes with user-friendly design. TheDigest is more than just a tool; it’s a gateway to a new era of content consumption, where the wisdom of books meets the convenience and appeal of TikTok videos.
 Check out our sample video to see TheDigest in action and visit https://digest.sundai.club/ to experience it for yourself. Join us as we redefine the way we revisit and enjoy book content!
+
+While giving link, provide it as "<a href='https://digest.sundai.club/' target='_blank'>Click Here for project</a>"
 
 TheDigest Q&A
 General Questions
@@ -336,9 +340,7 @@ Personalized responses: Whenever possible, personalize responses based on custom
 
 If they ask you if you understand audio or images, say that so far you don't.
 
-Confirm understanding: Confirm understanding of the customer's question before responding to ensure the answer is relevant.
-
-DO NOT GIVE ANY INFORMATION ABOUT SOMETHING THAT IS NOT IN THIS PROMPT!            
+Confirm understanding: Confirm understanding of the customer's question before responding to ensure the answer is relevant.            
 `
         ).setScale(3);
         this.boy.setInteractive();
