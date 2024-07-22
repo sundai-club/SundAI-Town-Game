@@ -16,8 +16,9 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
    * @param {string} animKey - The key for the animation this NPC will use.
    * @param {number} startFrame - The starting frame number for the animation.
    * @param {number} endFrame - The ending frame number for the animation.
+   * @param {string} LLM_CONTEXT - The LLM CONTEXT for the NPC.
    */
-  constructor(scene, x, y, key, characterDescription, animKey, startFrame, endFrame) {
+  constructor(scene, x, y, key, characterDescription, animKey, startFrame, endFrame, LLM_CONTEXT) {
     super(scene, x, y, key);
 
     this.scene = scene;
@@ -35,9 +36,13 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     this.direction = 'down';
 
     this.isChatOpen = false;
-    this.chatManager = new ChatManager(characterDescription);
+    this.chatManager = new ChatManager(characterDescription, LLM_CONTEXT);
 
     this.createAnimation(animKey, startFrame, endFrame);
+
+    // Add the text display above the NPC
+    this.nameText = scene.add.text(x, y - 50, characterDescription, { fontSize: '20px', fill: '#A020FF', fontStyle: 'bold'});
+    this.nameText.setOrigin(0.5, 0.5);
   }
 
   /**

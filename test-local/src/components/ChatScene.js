@@ -169,7 +169,7 @@ class ChatScene extends Phaser.Scene {
 
         this.colliders = this.physics.add.staticGroup();
 
-        const buildingParams = [[290, 166, 128, 130, true, this, 'ComputerLabScene'], [291, 66, 92, 195], [611, 142, 107, 86], [780, 132, 40, 67], [830, 129, 51, 75], [872, 130, 19, 66], [924, 121, 56, 158], [741, 252, 74, 90], [755, 343, 53, 94], [822, 362, 58, 74], [915, 340, 71, 131], [890, 423, 73, 91], [190, 426, 51, 148], [255, 458, 50, 148], [288, 558, 71, 72], [339, 440, 68, 126], [424, 438, 71, 94], [289, 556, 73, 72], [206, 670, 69, 119], [631, 526, 129, 119], [140, 745, 51, 145], [271, 763, 80, 64], [422, 704, 51, 84], [424, 756, 75, 66], [737, 758, 76, 50], [780, 804, 44, 62], [832, 805, 55, 80], [873, 807, 18, 66], [924, 744, 58, 151]]
+        const buildingParams = [[290, 166, 128, 130, true, this, 'ComputerLabScene'], [291, 66, 92, 195], [611, 142, 107, 86, true, this, 'VolleyBallScene'], [780, 132, 40, 67], [830, 129, 51, 75], [872, 130, 19, 66], [924, 121, 56, 158], [741, 252, 74, 90], [755, 343, 53, 94], [822, 362, 58, 74], [915, 340, 71, 131], [890, 423, 73, 91], [190, 426, 51, 148], [255, 458, 50, 148], [288, 558, 71, 72], [339, 440, 68, 126], [424, 438, 71, 94], [289, 556, 73, 72], [206, 670, 69, 119], [631, 526, 129, 119], [140, 745, 51, 145], [271, 763, 80, 64], [422, 704, 51, 84], [424, 756, 75, 66], [737, 758, 76, 50], [780, 804, 44, 62], [832, 805, 55, 80], [873, 807, 18, 66], [924, 744, 58, 151]]
         this.buildings = buildingParams.map(params => {
             const building = new Building(...params);
             this.addCollider(building.x, building.y, building.width, building.height);
@@ -191,15 +191,15 @@ class ChatScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         // Create NPCs and set cursor style for hover
-        this.fishingguy = new NPC(this, 656, 500, 'fishingguy', 'Kev is a huge fishing lover. His dream is to become a captain just like your uncle who left for his dream to travel the world..', 'fishingguy', 0, 3).setScale(-2.5, 2.5);
+        this.fishingguy = new NPC(this, 656, 500, 'fishingguy', 'HUNTING', 'fishingguy', 0, 3, "HERE ADD AI NEWS HOUND").setScale(-2.5, 2.5);
         this.fishingguy.setInteractive();
         this.fishingguy.setCursorStyle();
 
-        this.girl = new NPC(this, 1000, 300, 'girl', 'Ellie left home dreaming...', 'girl', 0, 4).setScale(3);
+        this.girl = new NPC(this, 1000, 300, 'girl', '', 'girl', 0, 4).setScale(3);
         this.girl.setInteractive();
         this.girl.setCursorStyle();
 
-        this.boy = new NPC(this, 200, 170, 'boy', 'Kenji is a cheerful guy...', 'boy', 0, 7).setScale(3);
+        this.boy = new NPC(this, 200, 170, 'boy', 'I DIGEST BOOKS', 'boy', 0, 7, "HERE ADD AI BOOK DIGEST").setScale(3);
         this.boy.setInteractive();
         this.boy.setCursorStyle();
     }
@@ -288,7 +288,10 @@ class ChatScene extends Phaser.Scene {
      */
     addCollider(x, y, width, height) {
         const collider = this.colliders.create(x, y, null).setOrigin(0, 0).refreshBody().setVisible(true);
+<<<<<<< HEAD
         // collider.body.setInv
+=======
+>>>>>>> main
         collider.body.setSize(width, height);
     }
 
