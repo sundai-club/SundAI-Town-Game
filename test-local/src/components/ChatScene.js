@@ -103,7 +103,7 @@ class ChatScene extends Phaser.Scene {
         this.load.image('scroll', `https://play.rosebud.ai/assets/scrollpage03.png.png?g4DO`);
         this.load.audio('music', `https://play.rosebud.ai/assets/Game Village Shop RPG Theme (Endless Loop Version) - Elevate Audio.mp3.mp3?EUXn`);
 
-        this.load.image('angryMBA', 'https://play.rosebud.ai/assets/an angry student wearing smart attire in a stardew valley style.png?16ny');
+        // this.load.image('angryMBA', 'https://play.rosebud.ai/assets/an angry student wearing smart attire in a stardew valley style.png?16ny');
     }
 
     /**
@@ -147,21 +147,21 @@ class ChatScene extends Phaser.Scene {
         // Start with the player in idle animation
         this.player.anims.play('playerIdle', true);
 
-        // Add the angry MBA student
-        this.angryMBA = this.physics.add.image(400, 400, 'angryMBA').setScale(0.25);
-        this.angryMBA.setCollideWorldBounds(true);
+        // // Add the angry MBA student
+        // this.angryMBA = this.physics.add.image(400, 400, 'angryMBA').setScale(0.25);
+        // this.angryMBA.setCollideWorldBounds(true);
 
         // Add speech bubble for the angry MBA student
-        this.speechBubble = this.add.text(0, 0, '', {
-            fontSize: '16px',
-            color: "black",
-            backgroundColor: 'rgb(451, 247, 175)',
-            padding: { x: 10, y: 5 },
-            borderRadius: 10,
-            visible: false,
-            wordWrap: { width: 200 }, // Enable text wrapping
-            align: 'center' // Center-align the text
-        });
+        // this.speechBubble = this.add.text(0, 0, '', {
+        //     fontSize: '16px',
+        //     color: "black",
+        //     backgroundColor: 'rgb(451, 247, 175)',
+        //     padding: { x: 10, y: 5 },
+        //     borderRadius: 10,
+        //     visible: false,
+        //     wordWrap: { width: 200 }, // Enable text wrapping
+        //     align: 'center' // Center-align the text
+        // });
 
 
         this.input.on('gameobjectdown', (pointer, gameObject) => {
@@ -172,7 +172,7 @@ class ChatScene extends Phaser.Scene {
 
         this.colliders = this.physics.add.staticGroup();
 
-        const buildingParams = [[290, 166, 128, 130, true, this, 'ComputerLabScene'], [291, 66, 92, 195], [611, 142, 107, 86, true, this, 'VolleyballScene'], [780, 132, 40, 67], [830, 129, 51, 75], [872, 130, 19, 66], [924, 121, 56, 158], [741, 252, 74, 90], [755, 343, 53, 94], [822, 362, 58, 74], [915, 340, 71, 131], [890, 423, 73, 91], [190, 426, 51, 148], [255, 458, 50, 148], [288, 558, 71, 72], [339, 440, 68, 126], [424, 438, 71, 94], [289, 556, 73, 72], [206, 670, 69, 119], [631, 526, 129, 119], [140, 745, 51, 145], [271, 763, 80, 64], [422, 704, 51, 84], [424, 756, 75, 66], [737, 758, 76, 50], [780, 804, 44, 62], [832, 805, 55, 80], [873, 807, 18, 66], [924, 744, 58, 151]]
+        const buildingParams = [[290, 166, 128, 130], [291, 66, 92, 195], [611, 142, 107, 86, true, this, 'VolleyballScene'], [780, 132, 40, 67], [830, 129, 51, 75], [872, 130, 19, 66], [924, 121, 56, 158], [741, 252, 74, 90], [755, 343, 53, 94], [822, 362, 58, 74], [915, 340, 71, 131], [890, 423, 73, 91], [190, 426, 51, 148], [255, 458, 50, 148], [288, 558, 71, 72], [339, 440, 68, 126], [424, 438, 71, 94], [289, 556, 73, 72], [206, 670, 69, 119, true, this, 'ComputerLabScene'], [631, 526, 129, 119], [140, 745, 51, 145, true, this, 'ComputerLabScene'], [271, 763, 80, 64, true, this, 'ComputerLabScene'], [422, 704, 51, 84], [424, 756, 75, 66], [737, 758, 76, 50], [780, 804, 44, 62], [832, 805, 55, 80], [873, 807, 18, 66], [924, 744, 58, 151]]
         this.buildings = buildingParams.map(params => {
             const building = new Building(...params);
             this.addCollider(building.x, building.y, building.width, building.height);
@@ -387,20 +387,20 @@ DO NOT GIVE ANY INFORMATION ABOUT SOMETHING THAT IS NOT IN THIS PROMPT!
         }
 
         // Move the angry MBA student towards the player
-        const angle = Phaser.Math.Angle.Between(this.angryMBA.x, this.angryMBA.y, this.player.x, this.player.y);
-        const distance = Phaser.Math.Distance.Between(this.angryMBA.x, this.angryMBA.y, this.player.x, this.player.y);
+        // const angle = Phaser.Math.Angle.Between(this.angryMBA.x, this.angryMBA.y, this.player.x, this.player.y);
+        // const distance = Phaser.Math.Distance.Between(this.angryMBA.x, this.angryMBA.y, this.player.x, this.player.y);
         
-        if (distance > 100) {
-            this.angryMBA.setVelocity(Math.cos(angle) * 100, Math.sin(angle) * 100);
-            this.speechBubble.setVisible(false);
-        } else {
-            this.angryMBA.setVelocity(0, 0);
-            if (!this.speechBubble.visible) {
-                this.speechBubble.setText(this.getRandomAnnoyingMessage());
-                this.speechBubble.setVisible(true);
-            }
-            this.speechBubble.setPosition(this.angryMBA.x - 100, this.angryMBA.y - 80);
-        }
+        // if (distance > 100) {
+        //     this.angryMBA.setVelocity(Math.cos(angle) * 100, Math.sin(angle) * 100);
+        //     this.speechBubble.setVisible(false);
+        // } else {
+        //     this.angryMBA.setVelocity(0, 0);
+        //     if (!this.speechBubble.visible) {
+        //         this.speechBubble.setText(this.getRandomAnnoyingMessage());
+        //         this.speechBubble.setVisible(true);
+        //     }
+        //     this.speechBubble.setPosition(this.angryMBA.x - 100, this.angryMBA.y - 80);
+        // }
 
         // Ensure the speech bubble is always on top
         this.children.bringToTop(this.speechBubble);
