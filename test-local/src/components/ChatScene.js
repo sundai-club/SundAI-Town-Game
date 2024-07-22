@@ -26,15 +26,15 @@ class Building {
     }
 
     enter(playerX, playerY, pressedUp) {
-        console.log(`building image: ${this.image}`)
+        // console.log(`building image: ${this.image}`)
         if (!this.isEnterable){ return; }
         
         const distanceX = Math.abs(playerX - this.x);
         const distanceY = Math.abs(playerY - (this.y+(this.height/2)));
 
         let minDist = this.width/2
-        console.log(`Distance X: ${distanceX}`)
-        console.log(`Distance Y: ${distanceY}`)
+        // console.log(`Distance X: ${distanceX}`)
+        // console.log(`Distance Y: ${distanceY}`)
         if (distanceX <= minDist && distanceY <= 20 ) {
             if (!this.isActive) {
                 if (!this.image) {
@@ -169,7 +169,13 @@ class ChatScene extends Phaser.Scene {
 
         this.colliders = this.physics.add.staticGroup();
 
-        const buildingParams = [[299, 244, 123, 89, true, this, 'ComputerLabScene'], [300, 174, 87, 139], [609, 228, 99, 63], [802, 222, 117, 54], [903, 213, 55, 111], [729, 307, 70, 69], [743, 371, 51, 67], [807, 384, 53, 49], [896, 368, 71, 93], [870, 428, 70, 67], [204, 424, 57, 97], [267, 449, 52, 103], [295, 523, 70, 54], [348, 440, 70, 93], [427, 441, 71, 72], [223, 607, 70, 86], [155, 655, 51, 105], [281, 671, 79, 48], [426, 626, 53, 57], [428, 663, 82, 45], [625, 495, 130, 78], [845, 572, 196, 86], [903, 658, 55, 109], [728, 670, 80, 44], [804, 704, 119, 53]]
+        // const buildingParams = [[299, 148, 123, 89, true, this, 'ComputerLabScene'], [300, 34, 87, 132], [609, 158, 99, 59], [802, 159, 117, 52], [903, 97, 55, 106], [729, 227, 70, 65], [743, 289, 51, 64], [807, 319, 53, 46], [896, 262, 71, 88], [870, 344, 70, 64], [204, 310, 57, 93], [267, 329, 52, 98], [295, 445, 70, 52], [348, 331, 70, 88], [427, 351, 71, 68], [223, 495, 70, 82], [155, 523, 51, 100], [281, 592, 79, 46], [426, 540, 53, 55], [428, 589, 82, 42], [625, 397, 130, 74], [845, 462, 196, 81], [903, 522, 55, 104], [728, 595, 80, 41], [804, 620, 119, 50]]
+        // const buildingParams = [[299, 291, 123, 105], [300, 208, 87, 165], [609, 272, 99, 74], [802, 264, 117, 65], [903, 254, 55, 132], [728, 367, 69, 82], [743, 442, 51, 79], [808, 458, 53, 57], [896, 438, 70, 110], [870, 510, 69, 79], [204, 505, 56, 116], [267, 535, 51, 122], [295, 623, 69, 65], [348, 525, 69, 110], [427, 525, 70, 85], [223, 723, 69, 103], [155, 780, 50, 124], [281, 799, 78, 57], [427, 746, 53, 68], [428, 791, 81, 53], [625, 589, 130, 92], [845, 681, 195, 102], [903, 784, 55, 130], [728, 798, 80, 52], [804, 839, 119, 62]]
+        // const buildingParams = [[238, 238, 123, 105], [257, 125, 87, 165], [560, 235, 99, 74], [744, 232, 117, 65], [876, 188, 55, 132], [694, 326, 69, 82], [718, 403, 51, 79], [781, 429, 53, 57], [861, 383, 70, 110], [835, 471, 69, 79], [176, 447, 56, 116], [241, 474, 51, 122], [260, 590, 69, 65], [313, 470, 69, 110], [392, 483, 70, 85], [188, 671, 69, 103], [130, 718, 50, 124], [242, 771, 78, 57], [400, 712, 53, 68], [387, 764, 81, 53], [560, 543, 130, 92], [747, 630, 195, 102], [876, 719, 55, 130], [688, 772, 80, 52], [745, 808, 119, 62]]
+        // const buildingParams = [[299, 344, 123, 105], [300, 291, 87, 165], [609, 310, 99, 74], [802, 297, 117, 65], [903, 320, 55, 132], [728, 408, 69, 82], [743, 483, 51, 79], [808, 487, 53, 57], [896, 494, 70, 110], [870, 551, 69, 79], [204, 564, 56, 116], [267, 597, 51, 122], [295, 655, 69, 65], [348, 581, 69, 110], [427, 568, 70, 85], [223, 775, 69, 103], [155, 843, 50, 124], [281, 828, 78, 57], [427, 780, 53, 68], [428, 817, 81, 53], [625, 636, 130, 92], [845, 732, 195, 102], [903, 849, 55, 130], [728, 824, 80, 52], [804, 871, 119, 62]]
+        // const buildingParams = [[299, 186, 123, 105], [300, 43, 87, 165], [609, 198, 99, 74], [802, 199, 117, 65], [903, 122, 55, 132], [728, 285, 69, 82], [743, 363, 51, 79], [808, 401, 53, 57], [896, 328, 70, 110], [870, 431, 69, 79], [204, 389, 56, 116], [267, 413, 51, 122], [295, 558, 69, 65], [348, 415, 69, 110], [427, 440, 70, 85], [223, 620, 69, 103], [155, 656, 50, 124], [281, 742, 78, 57], [427, 678, 53, 68], [428, 738, 81, 53], [625, 497, 130, 92], [845, 579, 195, 102], [903, 654, 55, 130], [728, 746, 80, 52], [804, 777, 119, 62]]
+        // const buildingParams = [[305, 189, 126, 107], [305, 44, 88, 168], [620, 202, 100, 76], [818, 203, 120, 66], [920, 125, 56, 134], [742, 290, 70, 83], [757, 370, 52, 81], [823, 408, 54, 58], [914, 335, 72, 112], [886, 439, 70, 81], [208, 397, 57, 118], [272, 421, 52, 124], [300, 568, 70, 66], [354, 423, 70, 112], [436, 449, 72, 86], [227, 632, 70, 105], [158, 668, 51, 127], [287, 756, 80, 58], [435, 691, 54, 69], [436, 752, 82, 54], [637, 507, 133, 94], [861, 590, 199, 104], [920, 667, 56, 132], [742, 760, 81, 53], [819, 791, 121, 64]]
+        const buildingParams = [[305, 147, 126, 83], [305, 34, 88, 130], [620, 157, 100, 59], [818, 158, 120, 51], [920, 97, 56, 104], [742, 226, 70, 65], [757, 287, 52, 63], [823, 318, 54, 45], [914, 260, 72, 87], [886, 342, 70, 63], [208, 308, 57, 92], [272, 327, 52, 97], [300, 442, 70, 51], [354, 329, 70, 87], [436, 349, 72, 67], [227, 491, 70, 81], [158, 520, 51, 98], [287, 588, 80, 45], [435, 537, 54, 54], [436, 584, 82, 42], [637, 394, 133, 73], [861, 458, 199, 81], [920, 518, 56, 103], [742, 591, 81, 41], [819, 616, 121, 49]]
         this.buildings = buildingParams.map(params => {
             const building = new Building(...params);
             this.addCollider(building.x, building.y, building.width, building.height);
@@ -208,6 +214,7 @@ class ChatScene extends Phaser.Scene {
      * Update method called on each frame of the game loop. Handles the movement of the player and checks for interactions.
      */
     update() {
+        console.log(`Player X: ${this.player.x} | Player Y: ${this.player.y}`);
         if (this.isChatOpen) {
             if (this.cursors.up.isDown || this.cursors.down.isDown || this.cursors.left.isDown || this.cursors.right.isDown) {
                 this.closeChat();
@@ -286,7 +293,8 @@ class ChatScene extends Phaser.Scene {
      * @param {number} height - The height of the collider.
      */
     addCollider(x, y, width, height) {
-        const collider = this.colliders.create(x, y, null).setOrigin(0, 0).refreshBody().setVisible(false);
+        const collider = this.colliders.create(x, y, null).setOrigin(0, 0).refreshBody().setVisible(true);
+        // collider.body.setInv
         collider.body.setSize(width, height);
     }
 
@@ -295,16 +303,16 @@ class ChatScene extends Phaser.Scene {
      * @param {NPC} npc - The NPC with which the player is interacting.
      */
     openChat(npc) {
-        console.log("LET'S OPEN CHAT");
+        // console.log("LET'S OPEN CHAT");
         if (this.isChatOpen) return;
         this.isChatOpen = true;
 
-        console.log("NPC", npc);
+        // console.log("NPC", npc);
 
         const uniqueIdSuffix = npc.characterDescription.replace(/\s+/g, '-').toLowerCase();
 
         if (this.chatDialogs.has(npc)) {
-            console.log("HAS NPC");
+            // console.log("HAS NPC");
             const dialog = this.chatDialogs.get(npc);
             dialog.chatLog.setVisible(true);
             dialog.chatInput.setVisible(true);
@@ -351,7 +359,7 @@ class ChatScene extends Phaser.Scene {
                 closeButton
             });
 
-            console.log(chatLog);
+            // console.log(chatLog);
         }
     }
 
