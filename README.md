@@ -1,8 +1,8 @@
 # Welcome to the town of Sundai Club. Learn what we do in a game!
 
-This is a game in which you can walk around Sundai Club, get harassed by an MBA who wants your codefingers, Kill the Cats, and play volleyball (which we do after we hack like big haxxers).
-
-https://play.rosebud.ai/games/24542083-12df-4ff5-a992-b8f43486de76
+This is a game in which you can walk around Sundai Club, get harassed by an MBA who wants your codefingers, explore the hacks, and play volleyball (which we do after we hack like big haxxers).
+[
+https://play.rosebud.ai/games/24542083-12df-4ff5-a992-b8f43486de76](https://sund-ai-town-game-krw6.vercel.app/)
 
 ## Prerequisites
 
