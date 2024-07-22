@@ -78,7 +78,7 @@ class ChatScene extends Phaser.Scene {
      */
     preload() {
         this.load.image('background', '/assets/hoenn_remake__rustboro_city_by_yuysusl_d4y385y-fullview.jpg');
-        this.load.image('HBS', '/assets/HBS.png');
+        this.load.image('HBS', '/assets/HBS.jpg');
         this.load.image('enter_building_bubble', '/assets/pixel-speech-bubble.png');
         this.load.spritesheet('player', `https://play.rosebud.ai/assets/cat_Walk.png.png?Yuts`, {
             frameWidth: 48,
@@ -113,7 +113,7 @@ class ChatScene extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 1080, 890);
 
         this.add.image(550, 445, 'background').setScale(1.25);
-        this.add.image(250, 835, 'HBS').setScale(0.25);
+        this.add.image(240, 755, 'HBS').setScale(0.35);
         // this.add.image(550, 445, 'enter_building_bubble').setScale(1.25);
         this.add.image(1225, 445, 'scroll');
 
