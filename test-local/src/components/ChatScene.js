@@ -288,10 +288,6 @@ class ChatScene extends Phaser.Scene {
      */
     addCollider(x, y, width, height) {
         const collider = this.colliders.create(x, y, null).setOrigin(0, 0).refreshBody().setVisible(true);
-<<<<<<< HEAD
-        // collider.body.setInv
-=======
->>>>>>> main
         collider.body.setSize(width, height);
     }
 
