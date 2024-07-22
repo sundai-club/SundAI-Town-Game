@@ -8,13 +8,14 @@ import { createAnimations } from './animations';
 import { addColliders } from './colliders';
 
 class Building {
-    constructor(x, y, width, height, isEnterable=false, scene=undefined, sceneKey='') {
+    constructor(x, y, width, height, isEnterable=false, image_key='', scene=undefined, sceneKey='') {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         
         this.isEnterable = isEnterable;
+        this.image_key = image_key;
         this.scene = scene;
         // this.setScene = setScene;
         this.sceneKey = sceneKey;
@@ -27,7 +28,7 @@ class Building {
 
     enter(playerX, playerY, pressedUp) {
         // console.log(`building image: ${this.image}`)
-        if (!this.isEnterable){ return; }
+        if (!this.isEnterable && !this.image_key){ return; }
         
         const distanceX = Math.abs(playerX - this.x);
         const distanceY = Math.abs(playerY - (this.y+(this.height/2)));
@@ -38,12 +39,12 @@ class Building {
         if (distanceX <= minDist && distanceY <= 20 ) {
             if (!this.isActive) {
                 if (!this.image) {
-                    this.image = this.scene.add.image(this.x, this.y + (this.height/2) - 20, 'enter_building_bubble');
+                    this.image = this.scene.add.image(this.x, this.y + (this.height/2) - 20, this.image_key).setScale(0.5);
                 } else {
                     this.image.addToDisplayList()
                 }
                 this.isActive = true;
-            } else if (pressedUp) {
+            } else if (this.sceneKey && pressedUp) {
                 this.counter -= 1;
                 if (this.counter <= 0) {this.scene.scene.start(this.sceneKey)}
             }
@@ -103,6 +104,8 @@ class ChatScene extends Phaser.Scene {
         this.load.audio('music', `https://play.rosebud.ai/assets/Game Village Shop RPG Theme (Endless Loop Version) - Elevate Audio.mp3.mp3?EUXn`);
 
         this.load.image('angryMBA', 'https://play.rosebud.ai/assets/an angry student wearing smart attire in a stardew valley style.png?16ny');
+        this.load.image('ai_news_hound', '/assets/ai_news_hound.png');
+        this.load.image('digest_book', '/assets/digest_books.png');
     }
 
     /**
@@ -169,7 +172,7 @@ class ChatScene extends Phaser.Scene {
 
         this.colliders = this.physics.add.staticGroup();
 
-        const buildingParams = [[290, 166, 128, 130, true, this, 'ComputerLabScene'], [291, 66, 92, 195], [611, 142, 107, 86, true, this, 'VolleyballScene'], [780, 132, 40, 67], [830, 129, 51, 75], [872, 130, 19, 66], [924, 121, 56, 158], [741, 252, 74, 90], [755, 343, 53, 94], [822, 362, 58, 74], [915, 340, 71, 131], [890, 423, 73, 91], [190, 426, 51, 148], [255, 458, 50, 148], [288, 558, 71, 72], [339, 440, 68, 126], [424, 438, 71, 94], [289, 556, 73, 72], [206, 670, 69, 119], [631, 526, 129, 119], [140, 745, 51, 145], [271, 763, 80, 64], [422, 704, 51, 84], [424, 756, 75, 66], [737, 758, 76, 50], [780, 804, 44, 62], [832, 805, 55, 80], [873, 807, 18, 66], [924, 744, 58, 151]]
+        const buildingParams = [[290, 166, 128, 130, true, 'enter_building_bubble', this, 'ComputerLabScene'], [291, 66, 92, 195], [611, 142, 107, 86, true, 'enter_building_bubble', this, 'VolleyballScene'], [780, 132, 40, 67], [830, 129, 51, 75], [872, 130, 19, 66], [924, 121, 56, 158], [741, 252, 74, 90], [755, 343, 53, 94], [822, 362, 58, 74], [915, 340, 71, 131], [890, 423, 73, 91], [190, 426, 51, 148], [255, 458, 50, 148], [288, 558, 71, 72], [339, 440, 68, 126], [424, 438, 71, 94], [289, 556, 73, 72], [206, 670, 69, 119], [631, 526, 129, 119], [140, 745, 51, 145], [271, 763, 80, 64], [422, 704, 51, 84], [424, 756, 75, 66], [737, 758, 76, 50], [780, 804, 44, 62], [832, 805, 55, 80], [873, 807, 18, 66], [924, 744, 58, 151]]
         this.buildings = buildingParams.map(params => {
             const building = new Building(...params);
             this.addCollider(building.x, building.y, building.width, building.height);
@@ -191,9 +194,11 @@ class ChatScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         // Create NPCs and set cursor style for hover
-        this.fishingguy = new NPC(this, 656, 500, 'fishingguy', 'HUNTING', 'fishingguy', 0, 3, "HERE ADD AI NEWS HOUND").setScale(-2.5, 2.5);
+        this.fishingguy = new NPC(this, 656, 350, 'fishingguy', 'HUNTING', 'fishingguy', 0, 3, "HERE ADD AI NEWS HOUND").setScale(-2.5, 2.5);
         this.fishingguy.setInteractive();
         this.fishingguy.setCursorStyle();
+        // add fishingguy as a new building to this.buildings
+        this.buildings.push(new Building(this.fishingguy.x, this.fishingguy.y, 50, 50, false, 'ai_news_hound', this, ''));
 
         this.girl = new NPC(this, 1000, 300, 'girl', '', 'girl', 0, 4).setScale(3);
         this.girl.setInteractive();
@@ -202,6 +207,7 @@ class ChatScene extends Phaser.Scene {
         this.boy = new NPC(this, 200, 170, 'boy', 'I DIGEST BOOKS', 'boy', 0, 7, "HERE ADD AI BOOK DIGEST").setScale(3);
         this.boy.setInteractive();
         this.boy.setCursorStyle();
+        this.buildings.push(new Building(this.boy.x, this.boy.y, 50, 50, false, 'digest_book', this, ''));
     }
 
     /**
