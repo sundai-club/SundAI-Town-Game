@@ -8,6 +8,7 @@ import ChatScene from './components/ChatScene.js';
 import ComputerLabScene from './components/ComputerLabScene.js';
 import IntroScene from './components/introScreen.js';
 import FunnyScene from './components/FunnyScreen.js';
+import VolleyballScene from './components/VolleyballScene.js';
 import './App.css';
 
 const Groq = require('groq-sdk');
@@ -206,7 +207,7 @@ const config = {
   parent: 'phaser-container',
   width: 1400,
   height: 890,
-  scene: [IntroScene, FunnyScene, ChatScene, ComputerLabScene],
+  scene: [IntroScene, FunnyScene, ChatScene, ComputerLabScene, VolleyballScene],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
