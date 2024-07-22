@@ -38,7 +38,7 @@ class Building {
         if (distanceX <= minDist && distanceY <= 20 ) {
             if (!this.isActive) {
                 if (!this.image) {
-                    this.image = this.scene.add.image(this.x, this.y + (this.height/2) - 20, 'enter_building_bubble');
+                    this.image = this.scene.add.image(this.x, this.y + (this.height/2) - 20, 'enter_building_bubble').setScale(0.5);
                 } else {
                     this.image.addToDisplayList()
                 }
