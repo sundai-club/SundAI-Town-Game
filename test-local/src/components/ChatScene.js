@@ -78,6 +78,7 @@ class ChatScene extends Phaser.Scene {
      */
     preload() {
         this.load.image('background', '/assets/hoenn_remake__rustboro_city_by_yuysusl_d4y385y-fullview.jpg');
+        this.load.image('HBS', '/assets/HBS.png');
         this.load.image('enter_building_bubble', '/assets/pixel-speech-bubble.png');
         this.load.spritesheet('player', `https://play.rosebud.ai/assets/cat_Walk.png.png?Yuts`, {
             frameWidth: 48,
@@ -112,7 +113,9 @@ class ChatScene extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 1080, 890);
 
         this.add.image(550, 445, 'background').setScale(1.25);
+        this.add.image(250, 835, 'HBS').setScale(0.25);
         // this.add.image(550, 445, 'enter_building_bubble').setScale(1.25);
+        this.add.image(1225, 445, 'scroll');
 
         this.add.image(1225, 445, 'scroll');
 
@@ -194,7 +197,7 @@ class ChatScene extends Phaser.Scene {
         this.fishingguy = new NPC(this, 656, 500, 'fishingguy', 'HUNTING', 'fishingguy', 0, 3, `
             You are an NPC designed to provide detailed, interesting, and engaging information about SundAi Hacks. Your primary focus is to share knowledge about various hacks developed by SundAi. You should present the information in an engaging and informative manner, making the content appealing and accessible.
             Compelling Summary of AI-Newshound Hack
-            
+
             Compelling Summary of AI-Newshound
 Introducing AI-Newshound, the ultimate research co-pilot designed to uncover newsworthy insights for AI journalists. This innovative tool is crafted to revolutionize the news gathering process, offering unparalleled support for journalists navigating the complex world of artificial intelligence.
 AI-Newshound leverages advanced AI algorithms to sift through vast amounts of data, identifying key trends, breaking news, and significant developments in the AI field. It provides journalists with timely, relevant, and insightful information, empowering them to craft compelling stories that captivate their audiences.
