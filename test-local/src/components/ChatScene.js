@@ -169,7 +169,8 @@ class ChatScene extends Phaser.Scene {
 
         this.colliders = this.physics.add.staticGroup();
 
-        const buildingParams = [[299, 244, 123, 89, true, this, 'ComputerLabScene'], [300, 174, 87, 139], [609, 228, 99, 63], [802, 222, 117, 54], [903, 213, 55, 111], [729, 307, 70, 69], [743, 371, 51, 67], [807, 384, 53, 49], [896, 368, 71, 93], [870, 428, 70, 67], [204, 424, 57, 97], [267, 449, 52, 103], [295, 523, 70, 54], [348, 440, 70, 93], [427, 441, 71, 72], [223, 607, 70, 86], [155, 655, 51, 105], [281, 671, 79, 48], [426, 626, 53, 57], [428, 663, 82, 45], [625, 495, 130, 78], [845, 572, 196, 86], [903, 658, 55, 109], [728, 670, 80, 44], [804, 704, 119, 53]]
+        const buildingParams = [[299, 244, 123, 89, true, this, 'ComputerLabScene'], [300, 174, 87, 139, true, this, 'VolleyballScene'], [609, 228, 99, 63, true, this, 'VolleyballScene'], [802, 222, 117, 54], [903, 213, 55, 111], [729, 307, 70, 69], [743, 371, 51, 67], [807, 384, 53, 49], [896, 368, 71, 93], [870, 428, 70, 67], [204, 424, 57, 97], [267, 449, 52, 103], [295, 523, 70, 54], [348, 440, 70, 93], [427, 441, 71, 72], [223, 607, 70, 86], [155, 655, 51, 105], [281, 671, 79, 48], [426, 626, 53, 57], [428, 663, 82, 45], [625, 495, 130, 78], [845, 572, 196, 86], [903, 658, 55, 109], [728, 670, 80, 44], [804, 704, 119, 53]]
+        // const buildingParams2 = [[299, 244, 123, 89], [300, 174, 87, 139, true, this, 'VolleyballScene'], [609, 228, 99, 63], [802, 222, 117, 54], [903, 213, 55, 111], [729, 307, 70, 69], [743, 371, 51, 67], [807, 384, 53, 49], [896, 368, 71, 93], [870, 428, 70, 67], [204, 424, 57, 97], [267, 449, 52, 103], [295, 523, 70, 54], [348, 440, 70, 93], [427, 441, 71, 72], [223, 607, 70, 86], [155, 655, 51, 105], [281, 671, 79, 48], [426, 626, 53, 57], [428, 663, 82, 45], [625, 495, 130, 78], [845, 572, 196, 86], [903, 658, 55, 109], [728, 670, 80, 44], [804, 704, 119, 53]]
         this.buildings = buildingParams.map(params => {
             const building = new Building(...params);
             this.addCollider(building.x, building.y, building.width, building.height);
@@ -286,7 +287,7 @@ class ChatScene extends Phaser.Scene {
      * @param {number} height - The height of the collider.
      */
     addCollider(x, y, width, height) {
-        const collider = this.colliders.create(x, y, null).setOrigin(0, 0).refreshBody().setVisible(false);
+        const collider = this.colliders.create(x, y, null).setOrigin(0, 0).refreshBody().setVisible(true);
         collider.body.setSize(width, height);
     }
 
