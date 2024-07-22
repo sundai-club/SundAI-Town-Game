@@ -38,6 +38,10 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     this.chatManager = new ChatManager(characterDescription);
 
     this.createAnimation(animKey, startFrame, endFrame);
+
+    // Add the text display above the NPC
+    this.nameText = scene.add.text(x, y - 50, characterDescription, { fontSize: '20px', fill: '#A020FF', fontStyle: 'bold'});
+    this.nameText.setOrigin(0.5, 0.5);
   }
 
   /**

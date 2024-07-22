@@ -191,15 +191,15 @@ class ChatScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         // Create NPCs and set cursor style for hover
-        this.fishingguy = new NPC(this, 656, 500, 'fishingguy', 'Kev is a huge fishing lover. His dream is to become a captain just like your uncle who left for his dream to travel the world..', 'fishingguy', 0, 3).setScale(-2.5, 2.5);
+        this.fishingguy = new NPC(this, 656, 500, 'fishingguy', 'HUNTING', 'fishingguy', 0, 3).setScale(-2.5, 2.5);
         this.fishingguy.setInteractive();
         this.fishingguy.setCursorStyle();
 
-        this.girl = new NPC(this, 1000, 300, 'girl', 'Ellie left home dreaming...', 'girl', 0, 4).setScale(3);
+        this.girl = new NPC(this, 1000, 300, 'girl', '', 'girl', 0, 4).setScale(3);
         this.girl.setInteractive();
         this.girl.setCursorStyle();
 
-        this.boy = new NPC(this, 200, 170, 'boy', 'Kenji is a cheerful guy...', 'boy', 0, 7).setScale(3);
+        this.boy = new NPC(this, 200, 170, 'boy', 'I DIGEST BOOKS', 'boy', 0, 7).setScale(3);
         this.boy.setInteractive();
         this.boy.setCursorStyle();
     }
