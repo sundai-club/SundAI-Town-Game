@@ -59,6 +59,27 @@ class ChatScene extends Phaser.Scene {
     constructor() {
         super('ChatScene')
     }
+
+    constructor() {
+        super('ChatScene')
+        this.annoyingMessages = [
+            "Hey! Want to join my startup for AI-powered toothbrushes?",
+            "Let's schedule a quick sync to optimize our synergies!",
+            "Have you heard about my blockchain solution for pet food?",
+            "Can I pick your brain about my new disruptive app idea?",
+            "Let's leverage our core competencies for a win-win situation!",
+            "Want to grab a coffee and discuss growth hacking strategies?",
+            "I'm looking for a co-founder for my revolutionary fidget spinner 2.0!",
+            "Let's pivot our paradigm to a more agile methodology!",
+            "Have you considered the potential ROI of investing in my startup?",
+            "Want to hear about my groundbreaking idea for a social media platform for plants?"
+        ];
+    }
+
+
+    constructor() {
+        super('ChatScene')
+    }
     /**
      * Preloads necessary game assets like images and audio.
      */
@@ -87,6 +108,8 @@ class ChatScene extends Phaser.Scene {
         });
         this.load.image('scroll', `https://play.rosebud.ai/assets/scrollpage03.png.png?g4DO`);
         this.load.audio('music', `https://play.rosebud.ai/assets/Game Village Shop RPG Theme (Endless Loop Version) - Elevate Audio.mp3.mp3?EUXn`);
+
+        this.load.image('angryMBA', 'https://play.rosebud.ai/assets/an angry student wearing smart attire in a stardew valley style.png?16ny');
     }
 
     /**
@@ -127,6 +150,23 @@ class ChatScene extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
         // Start with the player in idle animation
         this.player.anims.play('playerIdle', true);
+
+        // Add the angry MBA student
+        this.angryMBA = this.physics.add.image(400, 400, 'angryMBA').setScale(0.25);
+        this.angryMBA.setCollideWorldBounds(true);
+
+        // Add speech bubble for the angry MBA student
+        this.speechBubble = this.add.text(0, 0, '', {
+            fontSize: '16px',
+            color: "black",
+            backgroundColor: 'rgb(451, 247, 175)',
+            padding: { x: 10, y: 5 },
+            borderRadius: 10,
+            visible: false,
+            wordWrap: { width: 200 }, // Enable text wrapping
+            align: 'center' // Center-align the text
+        });
+
 
         this.input.on('gameobjectdown', (pointer, gameObject) => {
             if (gameObject instanceof NPC && gameObject.playerInRange(this.player)) {
@@ -214,11 +254,36 @@ class ChatScene extends Phaser.Scene {
         } else {
             this.player.anims.play('playerIdle', true);
         }
+
+        // Move the angry MBA student towards the player
+        const angle = Phaser.Math.Angle.Between(this.angryMBA.x, this.angryMBA.y, this.player.x, this.player.y);
+        const distance = Phaser.Math.Distance.Between(this.angryMBA.x, this.angryMBA.y, this.player.x, this.player.y);
+        
+        if (distance > 100) {
+            this.angryMBA.setVelocity(Math.cos(angle) * 100, Math.sin(angle) * 100);
+            this.speechBubble.setVisible(false);
+        } else {
+            this.angryMBA.setVelocity(0, 0);
+            if (!this.speechBubble.visible) {
+                this.speechBubble.setText(this.getRandomAnnoyingMessage());
+                this.speechBubble.setVisible(true);
+            }
+            this.speechBubble.setPosition(this.angryMBA.x - 100, this.angryMBA.y - 80);
+        }
+
+        // Ensure the speech bubble is always on top
+        this.children.bringToTop(this.speechBubble);
+
         // check if in front of buildings
         this.buildings.forEach(building => {
             building.enter(this.player.x, this.player.y, cursors.up.isDown)
         })
     }
+
+    getRandomAnnoyingMessage() {
+        return this.annoyingMessages[Math.floor(Math.random() * this.annoyingMessages.length)];
+    }
+
 
     /**
      * Adds a collider object to the scene at specified coordinates.
