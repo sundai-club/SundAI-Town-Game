@@ -56,6 +56,9 @@ class Building {
 }
 
 class ChatScene extends Phaser.Scene {
+    constructor() {
+        super('ChatScene')
+    }
     /**
      * Preloads necessary game assets like images and audio.
      */

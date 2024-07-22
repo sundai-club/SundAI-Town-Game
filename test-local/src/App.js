@@ -11,10 +11,10 @@ import './App.css';
 const Groq = require('groq-sdk');
 
 // API key handling (please replace with secure environment variables in production)
-var GROQ_API_KEY = 'g'
-GROQ_API_KEY = GROQ_API_KEY || 's';
-GROQ_API_KEY = GROQ_API_KEY || 'k_T27oIhdr';
-GROQ_API_KEY = GROQ_API_KEY || 'lfQmdiDspqYMWGdyb3FYvD0GVkMxhmalMN7TWTteMurD';
+let GROQ_API_KEY = 'g'
+GROQ_API_KEY = `${GROQ_API_KEY}s`;
+GROQ_API_KEY = `${GROQ_API_KEY}k_T27oIhdr`;
+GROQ_API_KEY = `${GROQ_API_KEY}lfQmdiDspqYMWGdyb3FYvD0GVkMxhmalMN7TWTteMurD`;
 
 // Initialize the Groq API with the provided API key
 const groq = new Groq({ apiKey:  GROQ_API_KEY , dangerouslyAllowBrowser: true});
@@ -32,7 +32,7 @@ class ChatManager {
       this.characterDescription = characterDescription;
       this.messages = [{
           "role": "system",
-          "content": "You are a strange old man that speaks in riddles about programming and wizardry. You are concise and bizarre."
+          "content": this.characterDescription
       }];
   }
 
