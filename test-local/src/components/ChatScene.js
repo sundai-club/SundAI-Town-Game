@@ -7,6 +7,54 @@ import Player from './Player';
 import { createAnimations } from './animations';
 import { addColliders } from './colliders';
 
+class Building {
+    constructor(x, y, width, height, isEnterable=false, scene=undefined, sceneKey='') {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        
+        this.isEnterable = isEnterable;
+        this.scene = scene;
+        // this.setScene = setScene;
+        this.sceneKey = sceneKey;
+
+        this.isActive = false;
+        this.counter = 50;
+
+        this.image = undefined;
+    }
+
+    enter(playerX, playerY, pressedUp) {
+        console.log(`building image: ${this.image}`)
+        if (!this.isEnterable){ return; }
+        
+        const distanceX = Math.abs(playerX - this.x);
+        const distanceY = Math.abs(playerY - (this.y+(this.height/2)));
+
+        let minDist = this.width/2
+        console.log(`Distance X: ${distanceX}`)
+        console.log(`Distance Y: ${distanceY}`)
+        if (distanceX <= minDist && distanceY <= 20 ) {
+            if (!this.isActive) {
+                if (!this.image) {
+                    this.image = this.scene.add.image(this.x, this.y + (this.height/2) - 20, 'enter_building_bubble');
+                } else {
+                    this.image.addToDisplayList()
+                }
+                this.isActive = true;
+            } else if (pressedUp) {
+                this.counter -= 1;
+                if (this.counter <= 0) {this.scene.scene.start(this.sceneKey)}
+            }
+        } else {
+            this.isActive = false;
+            this.counter = 50;
+            if (this.image) { this.image.removeFromDisplayList(); }
+        }
+    }
+}
+
 class ChatScene extends Phaser.Scene {
 
     constructor() {
@@ -31,6 +79,7 @@ class ChatScene extends Phaser.Scene {
      */
     preload() {
         this.load.image('background', '/assets/hoenn_remake__rustboro_city_by_yuysusl_d4y385y-fullview.jpg');
+        this.load.image('enter_building_bubble', '/assets/pixel-speech-bubble.png');
         this.load.spritesheet('player', `https://play.rosebud.ai/assets/cat_Walk.png.png?Yuts`, {
             frameWidth: 48,
             frameHeight: 48
@@ -64,6 +113,7 @@ class ChatScene extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 1080, 890);
 
         this.add.image(550, 445, 'background').setScale(1.25);
+        // this.add.image(550, 445, 'enter_building_bubble').setScale(1.25);
 
         this.add.image(1225, 445, 'scroll');
 
@@ -120,19 +170,12 @@ class ChatScene extends Phaser.Scene {
 
         this.colliders = this.physics.add.staticGroup();
 
-        this.addCollider(390, 105, 180, 130);
-        this.addCollider(670, 105, 120, 140);
-        this.addCollider(885, 105, 110, 125);
-        this.addCollider(120, 270, 110, 175);
-        this.addCollider(650, 310, 90, 125);
-        this.addCollider(795, 310, 80, 105);
-        this.addCollider(85, 550, 80, 105);
-        this.addCollider(330, 570, 80, 125);
-        this.addCollider(550, 570, 160, 140);
-        this.addCollider(770, 580, 120, 80);
-        this.addCollider(970, 510, 110, 160);
-        this.addCollider(710, 750, 90, 100);
-        this.addCollider(545, 750, 80, 90);
+        const buildingParams = [[299, 244, 123, 89, true, this, 'ComputerLabScene'], [300, 174, 87, 139], [609, 228, 99, 63], [802, 222, 117, 54], [903, 213, 55, 111], [729, 307, 70, 69], [743, 371, 51, 67], [807, 384, 53, 49], [896, 368, 71, 93], [870, 428, 70, 67], [204, 424, 57, 97], [267, 449, 52, 103], [295, 523, 70, 54], [348, 440, 70, 93], [427, 441, 71, 72], [223, 607, 70, 86], [155, 655, 51, 105], [281, 671, 79, 48], [426, 626, 53, 57], [428, 663, 82, 45], [625, 495, 130, 78], [845, 572, 196, 86], [903, 658, 55, 109], [728, 670, 80, 44], [804, 704, 119, 53]]
+        this.buildings = buildingParams.map(params => {
+            const building = new Building(...params);
+            this.addCollider(building.x, building.y, building.width, building.height);
+            return building;
+        });
         this.physics.add.collider(this.player, this.colliders);
 
         this.chatDialogs = new Map();
@@ -144,7 +187,7 @@ class ChatScene extends Phaser.Scene {
 
         music.play();
 
-        this.add.image(550, 445, 'foreground').setScale(1.25);
+        // this.add.image(550, 445, 'foreground').setScale(1.25);
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -205,6 +248,7 @@ class ChatScene extends Phaser.Scene {
         } else {
             this.player.anims.play('playerIdle', true);
         }
+
         // Move the angry MBA student towards the player
         const angle = Phaser.Math.Angle.Between(this.angryMBA.x, this.angryMBA.y, this.player.x, this.player.y);
         const distance = Phaser.Math.Distance.Between(this.angryMBA.x, this.angryMBA.y, this.player.x, this.player.y);
@@ -224,7 +268,10 @@ class ChatScene extends Phaser.Scene {
         // Ensure the speech bubble is always on top
         this.children.bringToTop(this.speechBubble);
 
-
+        // check if in front of buildings
+        this.buildings.forEach(building => {
+            building.enter(this.player.x, this.player.y, cursors.up.isDown)
+        })
     }
 
     getRandomAnnoyingMessage() {
